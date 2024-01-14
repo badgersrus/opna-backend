@@ -10,21 +10,17 @@ class Project:
         self.management_team_expertise = management_team_expertise  # String (low/med/high/expert rating)
         self.mrv_transaparency = mrv_transaparency  # String (low/med/high quality of transparnecy rating)
     
-    def to_dict(self, score=0):
-        data = {
-            "projectType": self.project_type,
-            "carbonReductionPotential": self.carbon_reduction_potential,
-            "costEffectiveness": self.cost_effectiveness,
-            "financialReturns": self.financial_returns,
-            "riskProfile": self.risk_profile,
-            "projectLifespan": self.project_lifespan,
-            "environmentalImpact": self.environmental_impact,
-            "managementTeamExpertise": self.management_team_expertise,
-            "mrvTransparency": self.mrv_transaparency
-        }
-        if score > 0:
-            data['score'] = score
-        return data
+        def serialize(self, score=0):
+            serialized_data = {self._to_camel_case(key): value for key, value in vars(self).items()}
+            if score > 0 :
+                serialized_data['score'] = score
+            return serialized_data
+
+        @staticmethod
+        def _to_camel_case(snake_str):
+            components = snake_str.split('_')
+            return components[0] + ''.join(x.title() for x in components[1:])
+
 
 
 # example projects
