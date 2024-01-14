@@ -19,7 +19,7 @@ def match_projects():
 
     matched_projects = match_projects_to_preferences(projects, customer_preferences)
 
-    formatted_results_short = [project.to_dict(score=score) for project, score in matched_projects]
+    formatted_results_short = [project.serialize(score=score) for project, score in matched_projects]
 
     return jsonify(formatted_results_short)
 
